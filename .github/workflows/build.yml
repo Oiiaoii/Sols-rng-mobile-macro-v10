@@ -1,13 +1,8 @@
 name: Build APK
-
-on:
-workflow_dispatch:
-
+on: workflow_dispatch
 jobs:
-build:
+test:
 runs-on: ubuntu-latest
 steps:
 - uses: actions/checkout@v4
-
-  - name: Find Gradle files
-    run: find . -name settings.gradle.kts -o -name settings.gradle
+- run: pwd
