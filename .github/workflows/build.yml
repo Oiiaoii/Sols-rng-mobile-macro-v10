@@ -3,7 +3,8 @@ name: Build APK
 on:
 workflow_dispatch:
 push:
-branches: [main]
+branches:
+- main
 
 permissions:
 contents: read
@@ -13,23 +14,12 @@ build:
 runs-on: ubuntu-latest
 
 steps:
-  - uses: actions/checkout@v4
+  - name: Checkout repository
+    uses: actions/checkout@v4
 
-  - name: Inspect project structure
+  - name: Locate Gradle project
+    shell: bash
     run: |
-      echo "Repository root:"
-      pwd
-      echo "Files and folders:"
-      find . -maxdepth 4 \( -name "settings.gradle" -o -name "settings.gradle.kts" -o -name "build.gradle" -o -name "build.gradle.kts" \) -print
-
-  - uses: actions/setup-java@v4
-    with:
-      distribution: temurin
-      java-version: 17
-
-  - uses: gradle/actions/setup-gradle@v3
-    with:
-      gradle-version: 8.9
-
-  - name: Build debug APK
-    run: gradle assembleDebug --stacktrace --no-daemon
+      echo "Searching for Gradle project..."
+      find . -type f \( -name "settings.gradle" -o -name "settings.gradle.kts" \) -print
+      echo "Searching complete."
