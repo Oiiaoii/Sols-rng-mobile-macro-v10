@@ -1,11 +1,7 @@
 name: Build APK
+
 on:
 workflow_dispatch:
-push:
-branches: [main]
-
-permissions:
-contents: read
 
 jobs:
 build:
@@ -13,6 +9,5 @@ runs-on: ubuntu-latest
 steps:
 - uses: actions/checkout@v4
 
-  - name: Locate Gradle project
-    shell: bash
-    run: find . -type f \( -name 'settings.gradle' -o -name 'settings.gradle.kts' \) -print
+  - name: Find Gradle files
+    run: find . -name settings.gradle.kts -o -name settings.gradle
